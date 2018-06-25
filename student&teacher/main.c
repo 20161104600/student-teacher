@@ -6,7 +6,10 @@
 //  Copyright © 2018年 20161104600. All rights reserved.
 //
 
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <malloc/malloc.h>
 #include <string.h>
 #define MAXSIZE 30
 struct Student
@@ -122,8 +125,66 @@ void readin(SeqListT *L)// 输入老师相关信息
 }
 
 
+bool   findNameT(SeqListT L) //按姓名查找老师int
+{
+    char name2[10];//
+    printf("要查找的老师姓名为:\n");
+    scanf("%s",name2);
+    int i=0;
+    while ((i<=L.lastT)&&(strcmp(L.elem[i].name,name2)))//查找该老师
+        i++;
+    if  (i<=L.lastT)
+    {
+        printf("|  序号   |   姓名   |   性别  |   联系方式  |\n");
+        printf("|--------|----------|--------|----———----|\n");
+        printf("|%-8d|%-8s|%-8c|%-10d|\n",i+1,L.elem[i].name,L.elem[i].sex,L.elem[i].num);
+        return true;
+    }
+    else
+        printf("没有找到这名教师！");  //没找到返回空序号
+    return false;
+}
 
-int main()
+bool  findNameS(SeqListS L) //查找学生int
+{
+    char name2[10];
+    printf("要查找的学生姓名为:\n");
+    scanf("%s",name2);
+    int i=0;        //  顺序扫描表直到找到，或找不到 到表尾
+    while ((i<=L.lastS)&&(strcmp(L.elem[i].name,name2)))//找到后印相关信息
+        i++;
+    if  (i<=L.lastS)
+    {
+        printf("|   序号  |    姓名   |  性别  |   节目名称  |  节目类型  |   联系方式  |  班级   |\n");
+        printf("|--------|----------|--------|----———----|----———----|----———----|--------|\n");
+        printf("|%-8d|%-8s|%-8c|%-10s|%-10s|%-10d|%-8s|\n",i+1,L.elem[i].name,L.elem[i].sex,L.elem[i].proname,L.elem[i].protype,L.elem[i].num,L.elem[i].class);
+        return true;
+    }
+    else
+        printf("没有找到这名学生！\n");  //没找到返回空序号
+    return false;
+}
+
+void find(SeqListT L1,SeqListS L2)
+{
+    int a;
+    printf("查找学生还是教师（1.教师 2.学生）\n");
+    scanf("%d",&a);
+    if(a==1)
+    {
+        findNameT(L1);
+    }
+    else if(a==2)
+    {
+        findNameS(L2);
+    }
+    else if(a!=1&&a!=2)
+    {
+        printf("输入信息有问题！\n");
+    }
+}
+
+int  main()
 {
     SeqListS l1;
     SeqListT l2;
